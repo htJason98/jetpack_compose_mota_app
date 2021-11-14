@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jason.mota.ui.login.LoginScreen
+import com.jason.mota.ui.login.RegistrationScreen
 
 @ExperimentalAnimationApi
 @Composable
@@ -18,11 +19,14 @@ fun NavigationHome() {
         composable(route = NavigationDestinations.loginScreen) {
             LoginScreen(navController)
         }
+        composable(route = NavigationDestinations.registrationScreen) {
+            RegistrationScreen(navController)
+        }
     }
 }
 
 object NavigationDestinations {
     const val welcomeScreen = "WelcomeScreen"
     const val loginScreen = "LoginScreen"
-    const val historyScreen = "HistoryScreen"
+    const val registrationScreen = "RegistrationScreen"
 }

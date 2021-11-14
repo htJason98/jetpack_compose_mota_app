@@ -8,4 +8,11 @@
     <string name="login_description">resolutions\nlife management\nself control</string>
     <string name="login_btn_email">continue with e-mail</string>
     <string name="login_term_of_use">by continuing you agree\'s Mota\nTerm of Use &amp; Privacy Policy</string>
+
+    <string name="sign_up_title">create\nan account</string>
+    <string name="sign_up_btn">sign up</string>
+    <string name="sign_up_username">your username</string>
+    <string name="sign_up_email">your email</string>
+    <string name="sign_up_password">your password</string>
+    <string name="sign_up_already">already have an account?</string>
 </resources>

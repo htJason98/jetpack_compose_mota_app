@@ -28,6 +28,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.jason.mota.R
 import com.jason.mota.ui.home.GradientTextView
+import com.jason.mota.ui.home.NavigationDestinations
 
 @Composable
 fun LoginScreen(navController: NavController?) {
@@ -125,7 +126,7 @@ fun LoginScreen(navController: NavController?) {
             Spacer(modifier = Modifier.height(30.dp))
             Button(
                 onClick = {
-
+                    navController?.navigate(NavigationDestinations.registrationScreen)
                 },
                 modifier = Modifier
                     .padding(35.dp, 0.dp)
