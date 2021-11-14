@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">mota</string>
+
+    <string name="started_title">mota application</string>
+    <string name="started_description">create a new\napproach to your\nlife together</string>
+    <string name="started_btn">get started</string>
+
+    <string name="login_description">resolutions\nlife management\nself control</string>
+    <string name="login_btn_email">continue with e-mail</string>
+    <string name="login_term_of_use">by continuing you agree\'s Mota\nTerm of Use &amp; Privacy Policy</string>
+</resources>
