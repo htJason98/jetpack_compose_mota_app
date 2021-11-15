@@ -21,6 +21,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,7 +41,7 @@ fun RegistrationScreen(navController: NavController?) {
     var username by remember { mutableStateOf(Constants.USER_NAME) }
     var email by remember { mutableStateOf(Constants.EMAIL) }
     var password by remember { mutableStateOf(Constants.PASSWORD) }
-    var transformation by remember { mutableStateOf(VisualTransformation.None) }
+    val usernameFocusRequester = remember { FocusRequester() }
     val emailFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -73,94 +74,63 @@ fun RegistrationScreen(navController: NavController?) {
             modifier = Modifier.constrainAs(title) {
                 top.linkTo(btnBack.bottom, margin = 12.dp)
                 start.linkTo(btnBack.start, margin = 12.dp)
-            }
-        )
-        TextField(
-            value = username,
-            onValueChange = {
-                username = it
             },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = colorResource(id = R.color.black_blue),
-                textColor = Color.LightGray
-            ),
-            keyboardActions = KeyboardActions(onNext = { emailFocusRequester.requestFocus() }),
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+            fontFamily = FontFamily.Default
+        )
+        Row(
             modifier = Modifier
-                .fillMaxWidth(0.83f)
+                .fillMaxWidth()
                 .constrainAs(edtUsername) {
                     top.linkTo(title.bottom, margin = 24.dp)
                     start.linkTo(title.start)
                 }
-                .onFocusChanged {
-                    if (it.isFocused && username == Constants.USER_NAME) {
-                        username = ""
-                    } else if (username.isEmpty()) {
-                        username = Constants.USER_NAME
-                    }
-                }
-        )
-        TextField(
-            value = email,
-            onValueChange = {
-                email = it
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = colorResource(id = R.color.black_blue),
-                textColor = Color.LightGray
-            ),
-            keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
-            keyboardOptions = KeyboardOptions.Default.copy(
+        ) {
+            CustomTextField(
+                defaultValue = Constants.USER_NAME,
+                value = username,
+                onValueChange = { username = it },
                 imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Email
-            ),
+                keyboardType = KeyboardType.Text,
+                keyboardActions = KeyboardActions(onNext = { emailFocusRequester.requestFocus() }),
+                focusRequester = usernameFocusRequester
+            )
+        }
+        Row(
             modifier = Modifier
-                .fillMaxWidth(0.83f)
+                .fillMaxWidth()
                 .constrainAs(edtEmail) {
                     top.linkTo(edtUsername.bottom, margin = 24.dp)
                     start.linkTo(edtUsername.start)
                 }
-                .onFocusChanged {
-                    if (it.isFocused && email == Constants.EMAIL) {
-                        email = ""
-                    } else if (email.isEmpty()) {
-                        email = Constants.EMAIL
-                    }
-                }
-                .focusRequester(emailFocusRequester)
-        )
-        TextField(
-            value = password,
-            onValueChange = {
-                password = it
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = colorResource(id = R.color.black_blue),
-                textColor = Color.LightGray
-            ),
-            visualTransformation = transformation,
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Password
-            ),
+        ) {
+            CustomTextField(
+                defaultValue = Constants.EMAIL,
+                value = email,
+                onValueChange = { email = it },
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Email,
+                keyboardActions = KeyboardActions(onNext = { passwordFocusRequester.requestFocus() }),
+                focusRequester = emailFocusRequester
+            )
+        }
+        Row(
             modifier = Modifier
-                .fillMaxWidth(0.83f)
+                .fillMaxWidth()
                 .constrainAs(edtPassword) {
                     top.linkTo(edtEmail.bottom, margin = 24.dp)
                     start.linkTo(edtEmail.start)
                 }
-                .onFocusChanged {
-                    if (it.isFocused && password == Constants.PASSWORD) {
-                        password = ""
-                        transformation = PasswordVisualTransformation()
-                    } else if (password.isEmpty()) {
-                        password = Constants.PASSWORD
-                        transformation = VisualTransformation.None
-                    }
-                }
-                .focusRequester(passwordFocusRequester)
-        )
+        ) {
+            CustomTextField(
+                defaultValue = Constants.PASSWORD,
+                value = password,
+                onValueChange = { password = it },
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Password,
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                focusRequester = passwordFocusRequester
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -207,6 +177,49 @@ fun RegistrationScreen(navController: NavController?) {
             )
         }
     }
+}
+
+@Composable
+fun CustomTextField(
+    defaultValue: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    keyboardType: KeyboardType,
+    imeAction: ImeAction,
+    keyboardActions: KeyboardActions,
+    focusRequester: FocusRequester,
+) {
+    var transformation by remember { mutableStateOf(VisualTransformation.None) }
+    TextField(
+        value = value,
+        onValueChange = {
+            onValueChange(it)
+        },
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = colorResource(id = R.color.black_blue),
+            textColor = Color.LightGray
+        ),
+        visualTransformation = transformation,
+        keyboardActions = keyboardActions,
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = imeAction,
+            keyboardType = keyboardType
+        ),
+        modifier = Modifier
+            .fillMaxWidth(0.83f)
+            .onFocusChanged {
+                if (it.isFocused && value == defaultValue) {
+                    onValueChange("")
+                    if (keyboardType == KeyboardType.Password) {
+                        transformation = PasswordVisualTransformation()
+                    }
+                } else if (value.isEmpty()) {
+                    onValueChange(defaultValue)
+                    transformation = VisualTransformation.None
+                }
+            }
+            .focusRequester(focusRequester)
+    )
 }
 
 @Preview(showBackground = true)
