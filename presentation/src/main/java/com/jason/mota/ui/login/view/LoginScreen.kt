@@ -1,19 +1,12 @@
-package com.jason.mota.ui.login
+package com.jason.mota.ui.login.view
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
@@ -26,12 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.jason.mota.R
-import com.jason.mota.ui.home.GradientTextView
-import com.jason.mota.ui.home.NavigationDestinations
+import com.jason.mota.component.GradientButton
+import com.jason.mota.component.OutlineButtonImage
+import com.jason.mota.ui.navigation.NavigationDestinations
 
 @Composable
-fun LoginScreen(navController: NavController?) {
+fun LoginScreen(navController: NavController) {
     ConstraintLayout(
         modifier = Modifier
             .background(color = colorResource(id = R.color.black_blue))
@@ -124,21 +119,10 @@ fun LoginScreen(navController: NavController?) {
             verticalArrangement = Arrangement.Top
         ) {
             Spacer(modifier = Modifier.height(30.dp))
-            Button(
-                onClick = {
-                    navController?.navigate(NavigationDestinations.registrationScreen)
-                },
-                modifier = Modifier
-                    .padding(35.dp, 0.dp)
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .clip(RoundedCornerShape(40.dp)),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = colorResource(id = R.color.black_blue)
-                )
-            ) {
-                GradientTextView(stringResource(id = R.string.login_btn_email))
-            }
+            GradientButton(
+                onClick = { navController.navigate(NavigationDestinations.registrationScreen) },
+                text = stringResource(id = R.string.login_btn_email)
+            )
         }
         Row(
             modifier = Modifier
@@ -149,37 +133,19 @@ fun LoginScreen(navController: NavController?) {
                 },
             horizontalArrangement = Arrangement.Center
         ) {
-            OutlinedButton(
+            OutlineButtonImage(
                 onClick = {
-
+                   //login with google api
                 },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.black_blue)),
-                modifier = Modifier
-                    .size(120.dp, 40.dp),
-                shape = CircleShape,
-                border = BorderStroke(0.5.dp, Color.LightGray),
-            ) {
-                Image(
-                    painterResource(id = R.drawable.ic_google),
-                    contentDescription = null
-                )
-            }
+                resImageId = R.drawable.ic_google
+            )
             Spacer(modifier = Modifier.width(16.dp))
-            OutlinedButton(
+            OutlineButtonImage(
                 onClick = {
-
+                    //login with facebook api
                 },
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.black_blue)),
-                modifier = Modifier
-                    .size(120.dp, 40.dp),
-                shape = CircleShape,
-                border = BorderStroke(0.5.dp, Color.LightGray),
-            ) {
-                Image(
-                    painterResource(id = R.drawable.ic_facebook),
-                    contentDescription = null
-                )
-            }
+                resImageId = R.drawable.ic_facebook
+            )
         }
         Row(
             modifier = Modifier
@@ -215,5 +181,5 @@ fun Description() {
 @Composable
 @Preview(showBackground = true)
 fun DefaultPreview() {
-    LoginScreen(null)
+    LoginScreen(rememberNavController())
 }

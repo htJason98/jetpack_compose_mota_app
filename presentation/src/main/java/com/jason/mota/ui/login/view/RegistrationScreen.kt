@@ -4,17 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
@@ -25,19 +20,21 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.jason.mota.R
 import com.jason.mota.common.Constants
-import com.jason.mota.ui.home.GradientTextView
+import com.jason.mota.component.CustomTextField
+import com.jason.mota.component.GradientButton
+import com.jason.mota.ui.navigation.NavigationDestinations
+import kotlinx.coroutines.launch
 
 @Composable
-fun RegistrationScreen(navController: NavController?) {
+fun RegistrationScreen(navController: NavController) {
     var username by remember { mutableStateOf(Constants.USER_NAME) }
     var email by remember { mutableStateOf(Constants.EMAIL) }
     var password by remember { mutableStateOf(Constants.PASSWORD) }
@@ -63,7 +60,9 @@ fun RegistrationScreen(navController: NavController?) {
                     start.linkTo(parent.start, margin = 24.dp)
                 }
                 .clickable {
-                    navController?.popBackStack()
+                    scope.launch {
+                        navController?.popBackStack()
+                    }
                 }
         )
         Text(
@@ -143,21 +142,14 @@ fun RegistrationScreen(navController: NavController?) {
             verticalArrangement = Arrangement.Top
         ) {
             Spacer(modifier = Modifier.height(40.dp))
-            Button(
+            GradientButton(
                 onClick = {
-
+                    scope.launch {
+                        navController.navigate(NavigationDestinations.homeScreen)
+                    }
                 },
-                modifier = Modifier
-                    .padding(35.dp, 0.dp)
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .clip(RoundedCornerShape(40.dp)),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = colorResource(id = R.color.black_blue)
-                )
-            ) {
-                GradientTextView(stringResource(id = R.string.sign_up_btn))
-            }
+                text = stringResource(id = R.string.sign_up_btn)
+            )
         }
         Row(
             modifier = Modifier
@@ -179,51 +171,8 @@ fun RegistrationScreen(navController: NavController?) {
     }
 }
 
-@Composable
-fun CustomTextField(
-    defaultValue: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    keyboardType: KeyboardType,
-    imeAction: ImeAction,
-    keyboardActions: KeyboardActions,
-    focusRequester: FocusRequester,
-) {
-    var transformation by remember { mutableStateOf(VisualTransformation.None) }
-    TextField(
-        value = value,
-        onValueChange = {
-            onValueChange(it)
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = colorResource(id = R.color.black_blue),
-            textColor = Color.LightGray
-        ),
-        visualTransformation = transformation,
-        keyboardActions = keyboardActions,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = imeAction,
-            keyboardType = keyboardType
-        ),
-        modifier = Modifier
-            .fillMaxWidth(0.83f)
-            .onFocusChanged {
-                if (it.isFocused && value == defaultValue) {
-                    onValueChange("")
-                    if (keyboardType == KeyboardType.Password) {
-                        transformation = PasswordVisualTransformation()
-                    }
-                } else if (value.isEmpty()) {
-                    onValueChange(defaultValue)
-                    transformation = VisualTransformation.None
-                }
-            }
-            .focusRequester(focusRequester)
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
-    RegistrationScreen(null)
+    RegistrationScreen(rememberNavController())
 }

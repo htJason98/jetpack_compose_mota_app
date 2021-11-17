@@ -4,16 +4,11 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -24,11 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.jason.mota.R
+import com.jason.mota.component.GradientButton
+import com.jason.mota.ui.navigation.NavigationDestinations
 
 @ExperimentalAnimationApi
 @Composable
-fun WelcomeScreen(navController: NavController?) {
+fun WelcomeScreen(navController: NavController) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -127,59 +125,9 @@ fun WelcomeScreen(navController: NavController?) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(30.dp))
-            Button(
-                onClick = {
-                    navController?.navigate(NavigationDestinations.loginScreen)
-                },
-                modifier = Modifier
-                    .padding(35.dp, 0.dp)
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .clip(RoundedCornerShape(40.dp)),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = colorResource(id = R.color.black_blue)
-                )
-            ) {
-                GradientTextView(stringResource(id = R.string.started_btn))
-            }
-        }
-    }
-}
-
-@Composable
-fun GradientTextView(title: String) {
-    ConstraintLayout {
-        val (image, text) = createRefs()
-        Image(
-            painterResource(id = R.drawable.gradient_blue_pink),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(RoundedCornerShape(40.dp))
-                .height(50.dp)
-                .constrainAs(image) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                },
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .constrainAs(text) {
-                    top.linkTo(parent.top)
-                },
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = title,
-                fontSize = dimensionResource(id = R.dimen.font_size_big).value.sp,
-                color = Color.White,
-            )
-            Spacer(
-                modifier = Modifier
-                    .height(dimensionResource(id = R.dimen.margin_small))
+            GradientButton(
+                onClick = { navController.navigate(NavigationDestinations.loginScreen) },
+                text = stringResource(id = R.string.started_btn)
             )
         }
     }
@@ -189,5 +137,5 @@ fun GradientTextView(title: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    WelcomeScreen(null)
+    WelcomeScreen(rememberNavController())
 }
