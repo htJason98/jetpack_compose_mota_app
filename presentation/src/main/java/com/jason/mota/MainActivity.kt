@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import com.jason.mota.ui.home.NavigationHome
+import com.jason.mota.ui.navigation.NavigationHome
 import com.jason.mota.ui.theme.MotaTheme
 
 class MainActivity : ComponentActivity() {

@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jason.mota.ui.home.WelcomeScreen
 import com.jason.mota.ui.home.view.HomeScreen
-import com.jason.mota.ui.login.RegistrationScreen
 import com.jason.mota.ui.login.view.LoginScreen
+import com.jason.mota.ui.login.view.RegistrationScreen
+import com.jason.mota.ui.login.view.WelcomeScreen
 
 @ExperimentalAnimationApi
 @Composable

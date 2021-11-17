@@ -1,4 +1,4 @@
-package com.jason.mota.ui.home
+package com.jason.mota.ui.login.view
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
@@ -32,7 +32,7 @@ fun WelcomeScreen(navController: NavController) {
             .fillMaxSize()
             .background(colorResource(id = R.color.black_blue))
     ) {
-        val (imageLeftTop, imageRightTop, imageLeftBot, centerView, descriptionView, description, btnGetStarted) = createRefs()
+        val (imageLeftTop, imageRightTop, imageLeftBot, centerView, descriptionView, btnGetStarted) = createRefs()
         Image(
             painterResource(id = R.drawable.gradient_blue),
             contentDescription = null,
@@ -136,6 +136,6 @@ fun WelcomeScreen(navController: NavController) {
 @ExperimentalAnimationApi
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun WelcomePreview() {
     WelcomeScreen(rememberNavController())
 }

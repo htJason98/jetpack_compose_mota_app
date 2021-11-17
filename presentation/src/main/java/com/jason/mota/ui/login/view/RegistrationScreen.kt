@@ -1,4 +1,4 @@
-package com.jason.mota.ui.login
+package com.jason.mota.ui.login.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -61,7 +61,7 @@ fun RegistrationScreen(navController: NavController) {
                 }
                 .clickable {
                     scope.launch {
-                        navController?.popBackStack()
+                        navController.popBackStack()
                     }
                 }
         )
@@ -173,6 +173,6 @@ fun RegistrationScreen(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun Preview() {
+fun RegistrationPreview() {
     RegistrationScreen(rememberNavController())
 }
