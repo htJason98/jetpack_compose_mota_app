@@ -15,4 +15,10 @@
     <string name="sign_up_email">your email</string>
     <string name="sign_up_password">your password</string>
     <string name="sign_up_already">already have an account?</string>
+
+    <string name="home_title">choose your\nresolution</string>
+    <string name="home_notice">tap card to see more</string>
+    <string name="home_resolution">%s\nresolution</string>
+    <string name="home_participants">%d participants</string>
+    <string name="home_challenge">%d challenges</string>
 </resources>

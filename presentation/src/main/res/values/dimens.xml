@@ -27,6 +27,7 @@
     <dimen name="font_size_big_x">17sp</dimen>
     <dimen name="font_size_huge">18sp</dimen>
     <dimen name="font_size_huge_x">20sp</dimen>
+    <dimen name="font_size_huge_xs">26sp</dimen>
 
     <dimen name="font_size_very_huge">32sp</dimen>
     <dimen name="font_size_very_huge_x">38sp</dimen>
