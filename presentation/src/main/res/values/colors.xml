@@ -8,4 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black_blue">#17161E</color>
+    <color name="light_yellow">#F0C788</color>
+    <color name="light_blue">#2C79E8</color>
+    <color name="medium_blue">#2262E6</color>
+    <color name="light_green">#60A8A7</color>
+    <color name="medium_pink">#DB4668</color>
+    <color name="light_pink">#EA6375</color>
+    <color name="white_pink">#F3E6D4</color>
+    <color name="medium_orange">#EB5B66</color>
+    <color name="cream_orange">#F8C583</color>
 </resources>

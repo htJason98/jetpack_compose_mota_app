@@ -1,18 +1,19 @@
 package com.jason.mota.ui.home.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,13 +28,13 @@ import com.jason.mota.ui.home.model.ResolutionState
 @Composable
 fun HomeScreen(navController: NavController) {
     val resolutionList = listOf(
-        ResolutionState(Resolution("001", "nutrition", "", "", 231, 300), listOf(Color.Blue, Color.Yellow)),
-        ResolutionState(Resolution("002", "behavior", "", "", 78, 255), listOf(Color.Green, Color.Blue)),
-        ResolutionState(Resolution("003", "fit", "", "", 3072, 2042), listOf(Color.Blue, Color.Magenta)),
-        ResolutionState(Resolution("004", "addiction", "", "", 345, 35), listOf(Color.Red, Color.Yellow)),
-        ResolutionState(Resolution("005", "productivity", "", "", 987, 215), listOf(Color.Red, Color.White)),
-        ResolutionState(Resolution("005", "carrier", "", "", 987, 215), listOf(Color.Red, Color.White)),
-        ResolutionState(Resolution("006", "custom", "", "", 1673, 16), listOf(Color.Green, Color.Blue)),
+        ResolutionState(Resolution("001", "nutrition", "", "https://image.similarpng.com/very-thumbnail/2020/12/Hamburger-cheeseburger-cartoon-character-on-transparent-background-PNG.png", 231, 300), listOf(colorResource(id = R.color.light_blue), colorResource(id = R.color.light_yellow))),
+        ResolutionState(Resolution("002", "behavior", "", "", 78, 255), listOf(colorResource(id = R.color.light_green), colorResource(id = R.color.light_blue))),
+        ResolutionState(Resolution("003", "fit", "", "", 3072, 2042), listOf(colorResource(id = R.color.medium_blue), colorResource(id = R.color.medium_pink))),
+        ResolutionState(Resolution("004", "addiction", "", "", 345, 35), listOf(colorResource(id = R.color.medium_orange), colorResource(id = R.color.cream_orange))),
+        ResolutionState(Resolution("005", "productivity", "", "", 987, 215), listOf(colorResource(id = R.color.light_pink), colorResource(id = R.color.white_pink))),
+        ResolutionState(Resolution("005", "carrier", "", "", 987, 215), listOf(colorResource(id = R.color.light_blue), colorResource(id = R.color.cream_orange))),
+        ResolutionState(Resolution("006", "custom", "", "", 1673, 16), listOf(colorResource(id = R.color.light_green), colorResource(id = R.color.light_blue))),
     )
     ConstraintLayout(
         modifier = Modifier
@@ -68,13 +69,14 @@ fun HomeScreen(navController: NavController) {
                 },
         ) {
             items(resolutionList) {
-                Surface(
+                Box(
                     modifier = Modifier
                         .padding(36.dp, 12.dp)
                         .clip(RoundedCornerShape(15.dp))
-                        .diagonalGradientTint(
-                            colors = it.colorState,
-                            blendMode = BlendMode.Plus
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = it.colorState
+                            )
                         )
                         .clickable {
 
@@ -89,7 +91,7 @@ fun HomeScreen(navController: NavController) {
 
 @Composable
 fun ResolutionItem(resolution: Resolution) {
-    Column(
+    Row(
         modifier = Modifier
             .height(160.dp)
             .padding(16.dp, 12.dp)
@@ -97,19 +99,41 @@ fun ResolutionItem(resolution: Resolution) {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxHeight(0.5f),
-            verticalArrangement = Arrangement.Top
+                .fillMaxHeight()
+                .fillMaxWidth(0.6f),
         ) {
-            TextViewTitle(content = stringResource(id = R.string.home_resolution, resolution.name))
+            Row(
+                modifier = Modifier.fillMaxHeight(0.5f),
+                verticalAlignment = Alignment.Top
+            ) {
+                TextViewTitle(content = stringResource(id = R.string.home_resolution, resolution.name))
+            }
+            Row(
+                modifier = Modifier.fillMaxHeight(),
+                verticalAlignment = Alignment.Top
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxHeight(),
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    TextViewRegularMedium(content = stringResource(id = R.string.home_participants, resolution.participants))
+                    Spacer(modifier = Modifier.height(4.dp))
+                    TextViewRegularMedium(content = stringResource(id = R.string.home_challenge, resolution.challenges))
+                }
+            }
         }
         Column(
             modifier = Modifier
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.Bottom
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center
         ) {
-            TextViewRegularMedium(content = stringResource(id = R.string.home_participants, resolution.participants))
-            Spacer(modifier = Modifier.height(4.dp))
-            TextViewRegularMedium(content = stringResource(id = R.string.home_challenge, resolution.challenges))
+            Image(
+                painterResource(id = R.drawable.nutrition),
+                contentDescription = null,
+                modifier = Modifier.size(100.dp, 100.dp),
+                alpha = 1f
+            )
         }
     }
 }
